@@ -1,13 +1,11 @@
 package com.synergysuite.employeems.dto.past_experience.query;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-public class PastExperienceQueryDTO {
+public class PastExperienceQuery {
 
     private Integer id;
     private String name;
