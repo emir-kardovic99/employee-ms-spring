@@ -1,6 +1,7 @@
 package com.synergysuite.employeems.services;
 
 import com.synergysuite.employeems.dto.employee.command.EmployeeCreateCommand;
+import com.synergysuite.employeems.dto.employee.query.EmployeeAllInfoQuery;
 import com.synergysuite.employeems.dto.employee.query.EmployeeQuery;
 import com.synergysuite.employeems.entities.Employee;
 import com.synergysuite.employeems.mappers.EmployeeMapper;
@@ -9,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,30 +25,31 @@ public class EmployeeService {
     }
 
     public Page<EmployeeQuery> findByName(Pageable pageable, String firstName) {
-        Page<Employee> employees = employeeRepository.findByFirstName(pageable, firstName);
+        Page<Employee> employees = employeeRepository.findByName(pageable, firstName);
 
         return employees.map(employeeMapper::toEmployeeQuery);
     }
 
-    public EmployeeQuery create(EmployeeCreateCommand employeeCreateCommand) {
+    public void add(EmployeeCreateCommand employeeCreateCommand) {
         Employee employee = employeeMapper.toEmployee(employeeCreateCommand);
 
         employeeRepository.save(employee);
-
-        return employeeMapper.toEmployeeQuery(employee);
     }
 
-    public EmployeeQuery update(EmployeeCreateCommand employeeCreateCommand, Integer id) {
+    public void update(EmployeeCreateCommand employeeCreateCommand, Integer id) {
         Employee employee = employeeMapper.toEmployee(employeeCreateCommand);
         employee.setId(id);
 
         employeeRepository.save(employee);
-
-        return employeeMapper.toEmployeeQuery(employee);
-
     }
 
     public void delete(Integer id) {
         employeeRepository.deleteById(id);
+    }
+
+    public EmployeeAllInfoQuery findById(Integer id) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+
+        return employeeMapper.toEmployeeAllInfoQuery(employee);
     }
 }

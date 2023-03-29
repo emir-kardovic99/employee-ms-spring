@@ -1,19 +1,19 @@
 package com.synergysuite.employeems.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
+@ToString
 @Table(name = "employee")
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,20 +31,20 @@ public class Employee {
     private LocalDate startDate;
 
     @OneToMany(
+            mappedBy = "employee",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinTable(
-            name = "employee_has_past_experience",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "past_experience_id"))
+            orphanRemoval = true,
+            targetEntity = PastExperience.class)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<PastExperience> pastExperiences = new ArrayList<>();
 
     @OneToMany(
+            mappedBy = "employee",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinTable(
-            name = "employee_has_holiday",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "holiday_id"))
+            orphanRemoval = true,
+            targetEntity = Holiday.class)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<Holiday> holidays = new ArrayList<>();
 }
