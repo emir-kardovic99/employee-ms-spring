@@ -18,9 +18,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             """)
     Page<Employee> findByName(Pageable pageable, @Param("firstName") String firstName);
 
-//    @Query(value = "select employee " +
-//            "from Employee employee " +
-//            "join PastExperience pastexp on employee = pastexp.employee " +
-//            "join Holiday holiday on employee = holiday.employee")
-//    Page<Employee> findAll1(Pageable pageable);
 }

@@ -6,6 +6,7 @@ import com.synergysuite.employeems.dto.employee.query.EmployeeQuery;
 import com.synergysuite.employeems.entities.Employee;
 import com.synergysuite.employeems.mappers.EmployeeMapper;
 import com.synergysuite.employeems.repositories.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +31,12 @@ public class EmployeeService {
         return employees.map(employeeMapper::toEmployeeQuery);
     }
 
-    public void add(EmployeeCreateCommand employeeCreateCommand) {
+    public Integer add(EmployeeCreateCommand employeeCreateCommand) {
         Employee employee = employeeMapper.toEmployee(employeeCreateCommand);
 
         employeeRepository.save(employee);
+
+        return employee.getId();
     }
 
     public void update(EmployeeCreateCommand employeeCreateCommand, Integer id) {

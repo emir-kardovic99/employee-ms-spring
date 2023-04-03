@@ -8,10 +8,11 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(
         componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.WARN,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface HolidayMapper {
+
     Holiday toHoliday(HolidayCreateCommand holidayCreateCommand);
     HolidayQuery toHolidayQuery(Holiday holiday);
 

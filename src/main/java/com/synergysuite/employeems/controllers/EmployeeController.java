@@ -24,14 +24,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("employee")
+@CrossOrigin // CRSF disabled so I can send http requests from localhost
 public class EmployeeController {
 
     private final HolidayService holidayService;
     private final EmployeeService employeeService;
     private final PastExperienceService pastExperienceService;
 
-//    EMPLOYEE
-
+    /* EMPLOYEE */
     @GetMapping
     public ResponseEntity<Page<EmployeeQuery>> allEmployees (Pageable pageable) {
         Page<EmployeeQuery> employees = employeeService.findAll(pageable);
@@ -59,10 +59,10 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createEmployee(@RequestBody EmployeeCreateCommand employeeCreateCommand) {
-        employeeService.add(employeeCreateCommand);
+    public ResponseEntity<Integer> createEmployee(@RequestBody EmployeeCreateCommand employeeCreateCommand) {
+        Integer id = employeeService.add(employeeCreateCommand);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
@@ -80,7 +80,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    PAST EXPERIENCE
+    /* PAST EXPERIENCE */
     @GetMapping("experience/{id}")
     public ResponseEntity<List<PastExperienceQuery>> getExperienceByEmployeeId(@PathVariable Integer id) {
         List<PastExperienceQuery> pastExperiences = pastExperienceService.find(id);
@@ -110,7 +110,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    HOLIDAYS
+    /* HOLIDAY */
     @GetMapping("holiday/{id}")
     public ResponseEntity<List<HolidayQuery>> getHolidayByEmployeeId(@PathVariable Integer id) {
         List<HolidayQuery> holidays = holidayService.find(id);

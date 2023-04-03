@@ -1,15 +1,15 @@
 package com.synergysuite.employeems.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
 @Entity
+@Getter
+@Setter
 @ToString
+@NoArgsConstructor
 @Table(name = "holiday")
 public class Holiday {
     @Id
@@ -17,15 +17,16 @@ public class Holiday {
     private Integer id;
     private String reason;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_from", nullable = false)
     private LocalDate dateFrom;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_to", nullable = false)
     private LocalDate dateTo;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
     @ToString.Exclude
-    private Employee employee;
+    @Column(name = "employee_id", nullable = false)
+    private Integer employeeId;
+
 }
