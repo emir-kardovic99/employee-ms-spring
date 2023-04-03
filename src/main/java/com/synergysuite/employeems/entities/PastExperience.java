@@ -3,6 +3,7 @@ package com.synergysuite.employeems.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 import java.time.LocalDate;
 
 @Entity
@@ -28,4 +29,5 @@ public class PastExperience {
     @Column(name = "employee_id", nullable = false)
     @ToString.Exclude
     private Integer employeeId;
+
 }

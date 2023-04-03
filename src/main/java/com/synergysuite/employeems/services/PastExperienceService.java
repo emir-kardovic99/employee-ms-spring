@@ -5,7 +5,6 @@ import com.synergysuite.employeems.dto.past_experience.query.PastExperienceQuery
 import com.synergysuite.employeems.entities.PastExperience;
 import com.synergysuite.employeems.mappers.PastExperienceMapper;
 import com.synergysuite.employeems.repositories.PastExperienceRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
