@@ -1,6 +1,7 @@
 package com.synergysuite.employeems.mappers;
 
 import com.synergysuite.employeems.dto.holiday.command.HolidayCreateCommand;
+import com.synergysuite.employeems.dto.holiday.command.HolidayUpdateCommand;
 import com.synergysuite.employeems.dto.holiday.query.HolidayQuery;
 import com.synergysuite.employeems.entities.Holiday;
 import org.mapstruct.Mapper;
@@ -14,6 +15,7 @@ import org.mapstruct.ReportingPolicy;
 public interface HolidayMapper {
 
     Holiday toHoliday(HolidayCreateCommand holidayCreateCommand);
+    Holiday toHoliday(HolidayUpdateCommand holidayUpdateCommand);
     HolidayQuery toHolidayQuery(Holiday holiday);
 
 }

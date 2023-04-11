@@ -3,3 +3,16 @@ spring:
     name: Spring App
   profiles:
     active: dev
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+logging:
+  level:
+    org:
+      ehcache: DEBUG
+
+jwt:
+  secret: bWFsb1RlemFTaWZyYTEyMy4=
+  validityInMinutes: 60
+  refreshTokenValidityInMinutes: 120

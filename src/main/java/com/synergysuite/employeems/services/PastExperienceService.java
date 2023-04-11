@@ -1,6 +1,7 @@
 package com.synergysuite.employeems.services;
 
 import com.synergysuite.employeems.dto.past_experience.command.PastExperienceCreateCommand;
+import com.synergysuite.employeems.dto.past_experience.command.PastExperienceUpdateCommand;
 import com.synergysuite.employeems.dto.past_experience.query.PastExperienceQuery;
 import com.synergysuite.employeems.entities.PastExperience;
 import com.synergysuite.employeems.mappers.PastExperienceMapper;
@@ -30,9 +31,8 @@ public class PastExperienceService {
         pastExperienceRepository.save(pastExperience);
     }
 
-    public void update(PastExperienceCreateCommand pastExperienceCreateCommand, Integer id) {
-        PastExperience pastExperience = pastExperienceMapper.toPastExperience(pastExperienceCreateCommand);
-        pastExperience.setId(id);
+    public void update(PastExperienceUpdateCommand pastExperienceCommand) {
+        PastExperience pastExperience = pastExperienceMapper.toPastExperience(pastExperienceCommand);
 
         pastExperienceRepository.save(pastExperience);
     }
