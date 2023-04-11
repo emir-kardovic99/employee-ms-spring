@@ -26,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -49,6 +50,7 @@ public class EmployeeController {
 
     /* EMPLOYEE */
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EmployeeQuery>> allEmployees (Pageable pageable)
     {
         Page<EmployeeQuery> employees = employeeService.findAll(pageable);
@@ -56,6 +58,7 @@ public class EmployeeController {
     }
 
     @GetMapping("search")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EmployeeQuery>> employeeByName(@PathParam("firstName") String firstName,
                                                       Pageable pageable)
     {
@@ -78,6 +81,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Integer> createEmployee(@RequestBody @Valid EmployeeCreateCommand employeeCommand)
             throws ValidationException
     {
@@ -92,6 +96,7 @@ public class EmployeeController {
     }
 
     @PutMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> updateEmployee(@RequestBody @Valid EmployeeUpdateCommand employeeCommand)
             throws ValidationException
     {
@@ -106,6 +111,7 @@ public class EmployeeController {
     }
 
     @PutMapping("{id}/role")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> addRole(@RequestBody RoleQuery role,
                                         @PathVariable Integer id)
     {
@@ -114,6 +120,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Integer id)
     {
         employeeService.delete(id);
@@ -122,6 +129,7 @@ public class EmployeeController {
 
     /* PAST EXPERIENCE */
     @GetMapping("{employeeId}/experiences")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<List<PastExperienceQuery>> getExperienceByEmployeeId(@PathVariable("employeeId") Integer id)
     {
         List<PastExperienceQuery> pastExperiences = pastExperienceService.find(id);
@@ -129,6 +137,7 @@ public class EmployeeController {
     }
 
     @PostMapping("experiences")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> addExperience(@RequestBody @Valid PastExperienceCreateCommand pastExperienceCommand)
             throws ValidationException
     {
@@ -143,6 +152,7 @@ public class EmployeeController {
     }
 
     @PutMapping("experiences")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> updateExperience(@RequestBody PastExperienceUpdateCommand pastExperienceCommand)
     {
         pastExperienceService.update(pastExperienceCommand);
@@ -150,6 +160,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("experiences/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteExperience(@PathVariable Integer id)
     {
         pastExperienceService.delete(id);
