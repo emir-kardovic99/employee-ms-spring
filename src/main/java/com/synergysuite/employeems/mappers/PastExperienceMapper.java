@@ -1,6 +1,7 @@
 package com.synergysuite.employeems.mappers;
 
 import com.synergysuite.employeems.dto.past_experience.command.PastExperienceCreateCommand;
+import com.synergysuite.employeems.dto.past_experience.command.PastExperienceUpdateCommand;
 import com.synergysuite.employeems.dto.past_experience.query.PastExperienceQuery;
 import com.synergysuite.employeems.entities.PastExperience;
 import org.mapstruct.Mapper;
@@ -14,6 +15,7 @@ import org.mapstruct.ReportingPolicy;
 public interface PastExperienceMapper {
 
     PastExperience toPastExperience(PastExperienceCreateCommand pastExperienceCreateCommand);
+    PastExperience toPastExperience(PastExperienceUpdateCommand pastExperienceUpdateCommand);
     PastExperienceQuery toPastExperienceQuery(PastExperience pastExperience);
 
 }

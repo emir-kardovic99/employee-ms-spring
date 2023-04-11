@@ -1,6 +1,7 @@
 package com.synergysuite.employeems.services;
 
 import com.synergysuite.employeems.dto.holiday.command.HolidayCreateCommand;
+import com.synergysuite.employeems.dto.holiday.command.HolidayUpdateCommand;
 import com.synergysuite.employeems.dto.holiday.query.HolidayQuery;
 import com.synergysuite.employeems.entities.Holiday;
 import com.synergysuite.employeems.mappers.HolidayMapper;
@@ -29,10 +30,9 @@ public class HolidayService {
         holidayRepository.save(holiday);
     }
 
-    public void update(HolidayCreateCommand holidayCreateCommand, Integer id) {
-        Holiday holiday = holidayMapper.toHoliday(holidayCreateCommand);
-        holiday.setId(id);
-
+    public void update(HolidayUpdateCommand holidayCommand)
+    {
+        Holiday holiday = holidayMapper.toHoliday(holidayCommand);
         holidayRepository.save(holiday);
     }
 
