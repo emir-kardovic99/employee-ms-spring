@@ -11,5 +11,6 @@ public class HolidayQuery {
     private String reason;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Boolean isApproved;
 
 }

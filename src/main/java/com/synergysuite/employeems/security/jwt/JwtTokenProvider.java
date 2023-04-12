@@ -28,11 +28,11 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.validityInMinutes}")
-    private long tokenValidityInMinutes;
+    @Value("${jwt.validityInHours}")
+    private long tokenValidityInHours;
 
-    @Value("${jwt.refreshTokenValidityInMinutes}")
-    private long refreshTokenValidityInMinutes;
+    @Value("${jwt.refreshTokenValidityInHours}")
+    private long refreshTokenValidityInHours;
     private final EmployeeRepository employeeRepository;
 
     public JwtTokenProvider(EmployeeRepository employeeRepository) {
@@ -50,7 +50,7 @@ public class JwtTokenProvider {
 
         // validity
         long now = new Date().getTime();
-        Date accessTokenValidity = new Date(now + tokenValidityInMinutes * 60_000);
+        Date accessTokenValidity = new Date(now + tokenValidityInHours * 3_600_000);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName()) // username
@@ -62,7 +62,7 @@ public class JwtTokenProvider {
         String refreshToken = null;
         if (rememberMe)
         {
-            Date refreshTokenValidity = new Date(now + refreshTokenValidityInMinutes * 60_000);
+            Date refreshTokenValidity = new Date(now + refreshTokenValidityInHours * 3_600_000);
             refreshToken = Jwts.builder()
                     .setSubject(authentication.getName())
                     .claim(AUTH_KEY, authorities)
