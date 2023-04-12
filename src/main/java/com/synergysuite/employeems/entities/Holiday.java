@@ -29,4 +29,7 @@ public class Holiday {
     @Column(name = "employee_id", nullable = false)
     private Integer employeeId;
 
+    @Column(name = "is_approved")
+    private Boolean isApproved;
+
 }

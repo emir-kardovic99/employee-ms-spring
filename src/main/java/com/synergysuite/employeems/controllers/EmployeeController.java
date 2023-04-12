@@ -6,6 +6,7 @@ import com.synergysuite.employeems.dto.employee.query.EmployeeAllInfoQuery;
 import com.synergysuite.employeems.dto.employee.query.EmployeeQuery;
 import com.synergysuite.employeems.dto.holiday.command.HolidayCreateCommand;
 import com.synergysuite.employeems.dto.holiday.command.HolidayUpdateCommand;
+import com.synergysuite.employeems.dto.holiday.query.HolidayExtendQuery;
 import com.synergysuite.employeems.dto.holiday.query.HolidayQuery;
 import com.synergysuite.employeems.dto.past_experience.command.PastExperienceCreateCommand;
 import com.synergysuite.employeems.dto.past_experience.command.PastExperienceUpdateCommand;
@@ -50,7 +51,6 @@ public class EmployeeController {
 
     /* EMPLOYEE */
     @GetMapping
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EmployeeQuery>> allEmployees (Pageable pageable)
     {
         Page<EmployeeQuery> employees = employeeService.findAll(pageable);
@@ -58,7 +58,6 @@ public class EmployeeController {
     }
 
     @GetMapping("search")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EmployeeQuery>> employeeByName(@PathParam("firstName") String firstName,
                                                       Pageable pageable)
     {
@@ -81,7 +80,6 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Integer> createEmployee(@RequestBody @Valid EmployeeCreateCommand employeeCommand)
             throws ValidationException
     {
@@ -96,7 +94,6 @@ public class EmployeeController {
     }
 
     @PutMapping
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> updateEmployee(@RequestBody @Valid EmployeeUpdateCommand employeeCommand)
             throws ValidationException
     {
@@ -111,7 +108,6 @@ public class EmployeeController {
     }
 
     @PutMapping("{id}/role")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> addRole(@RequestBody RoleQuery role,
                                         @PathVariable Integer id)
     {
@@ -120,7 +116,6 @@ public class EmployeeController {
     }
 
     @DeleteMapping("{id}")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Integer id)
     {
         employeeService.delete(id);
@@ -129,7 +124,6 @@ public class EmployeeController {
 
     /* PAST EXPERIENCE */
     @GetMapping("{employeeId}/experiences")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<List<PastExperienceQuery>> getExperienceByEmployeeId(@PathVariable("employeeId") Integer id)
     {
         List<PastExperienceQuery> pastExperiences = pastExperienceService.find(id);
@@ -137,7 +131,6 @@ public class EmployeeController {
     }
 
     @PostMapping("experiences")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> addExperience(@RequestBody @Valid PastExperienceCreateCommand pastExperienceCommand)
             throws ValidationException
     {
@@ -152,7 +145,6 @@ public class EmployeeController {
     }
 
     @PutMapping("experiences")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> updateExperience(@RequestBody PastExperienceUpdateCommand pastExperienceCommand)
     {
         pastExperienceService.update(pastExperienceCommand);
@@ -160,7 +152,6 @@ public class EmployeeController {
     }
 
     @DeleteMapping("experiences/{id}")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteExperience(@PathVariable Integer id)
     {
         pastExperienceService.delete(id);
@@ -168,6 +159,12 @@ public class EmployeeController {
     }
 
     /* HOLIDAY */
+    @GetMapping("holidays")
+    public ResponseEntity<List<HolidayExtendQuery>> getAllUnapproved() {
+        List<HolidayExtendQuery> holidays = holidayService.findAllUnapprovedHolidays();
+        return new ResponseEntity<>(holidays, HttpStatus.OK);
+    }
+
     @GetMapping("{employeeId}/holidays")
     public ResponseEntity<List<HolidayQuery>> getHolidayByEmployeeId(@PathVariable("employeeId") Integer id)
     {

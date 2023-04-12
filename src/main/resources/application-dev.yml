@@ -13,5 +13,5 @@ spring:
 
 jwt:
   secret: bWFsb1RlemFTaWZyYTEyMy4=
-  validityInMinutes: 60
-  refreshTokenValidityInMinutes: 120
+  validityInHours: 60
+  refreshTokenValidityInHours: 120

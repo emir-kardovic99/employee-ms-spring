@@ -2,6 +2,7 @@ package com.synergysuite.employeems.services;
 
 import com.synergysuite.employeems.dto.holiday.command.HolidayCreateCommand;
 import com.synergysuite.employeems.dto.holiday.command.HolidayUpdateCommand;
+import com.synergysuite.employeems.dto.holiday.query.HolidayExtendQuery;
 import com.synergysuite.employeems.dto.holiday.query.HolidayQuery;
 import com.synergysuite.employeems.entities.Holiday;
 import com.synergysuite.employeems.mappers.HolidayMapper;
@@ -38,5 +39,10 @@ public class HolidayService {
 
     public void delete(Integer id) {
         holidayRepository.deleteById(id);
+    }
+
+    public List<HolidayExtendQuery> findAllUnapprovedHolidays()
+    {
+        return holidayRepository.findAllUnapproved();
     }
 }
