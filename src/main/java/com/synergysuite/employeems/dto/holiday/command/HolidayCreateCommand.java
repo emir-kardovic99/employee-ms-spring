@@ -15,5 +15,6 @@ public class HolidayCreateCommand {
     private LocalDate dateTo;
     @NotNull(message = "Employee ID can't be null.")
     private Integer employeeId;
+    private Boolean isApproved = false;
 
 }
