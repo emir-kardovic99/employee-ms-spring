@@ -51,12 +51,14 @@ public class EmployeeController {
 
     /* EMPLOYEE */
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EmployeeQuery>> allEmployees (Pageable pageable)
     {
         Page<EmployeeQuery> employees = employeeService.findAll(pageable);
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("search")
     public ResponseEntity<Page<EmployeeQuery>> employeeByName(@PathParam("firstName") String firstName,
                                                       Pageable pageable)
@@ -65,6 +67,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("{username}")
     public ResponseEntity<EmployeeAllInfoQuery> employeeByUsername(@PathVariable("username") String username)
     {
@@ -72,6 +75,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("{id}/info")
     public ResponseEntity<EmployeeAllInfoQuery> employeeById(@PathVariable Integer id)
     {
@@ -80,6 +84,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Integer> createEmployee(@RequestBody @Valid EmployeeCreateCommand employeeCommand)
             throws ValidationException
     {
@@ -94,6 +99,7 @@ public class EmployeeController {
     }
 
     @PutMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> updateEmployee(@RequestBody @Valid EmployeeUpdateCommand employeeCommand)
             throws ValidationException
     {
@@ -107,6 +113,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("{id}/role")
     public ResponseEntity<Void> addRole(@RequestBody RoleQuery role,
                                         @PathVariable Integer id)
@@ -115,6 +122,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Integer id)
     {
@@ -123,6 +131,7 @@ public class EmployeeController {
     }
 
     /* PAST EXPERIENCE */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("{employeeId}/experiences")
     public ResponseEntity<List<PastExperienceQuery>> getExperienceByEmployeeId(@PathVariable("employeeId") Integer id)
     {
@@ -130,6 +139,7 @@ public class EmployeeController {
         return new ResponseEntity<>(pastExperiences, HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("experiences")
     public ResponseEntity<Void> addExperience(@RequestBody @Valid PastExperienceCreateCommand pastExperienceCommand)
             throws ValidationException
@@ -144,6 +154,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("experiences")
     public ResponseEntity<Void> updateExperience(@RequestBody PastExperienceUpdateCommand pastExperienceCommand)
     {
@@ -151,6 +162,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("experiences/{id}")
     public ResponseEntity<Void> deleteExperience(@PathVariable Integer id)
     {
@@ -160,11 +172,14 @@ public class EmployeeController {
 
     /* HOLIDAY */
     @GetMapping("holidays")
-    public ResponseEntity<List<HolidayExtendQuery>> getAllUnapproved() {
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    public ResponseEntity<List<HolidayExtendQuery>> getAllUnapproved()
+    {
         List<HolidayExtendQuery> holidays = holidayService.findAllUnapprovedHolidays();
         return new ResponseEntity<>(holidays, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("{employeeId}/holidays")
     public ResponseEntity<List<HolidayQuery>> getHolidayByEmployeeId(@PathVariable("employeeId") Integer id)
     {
@@ -173,6 +188,7 @@ public class EmployeeController {
     }
 
     @PostMapping("holidays")
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public ResponseEntity<Void> addHoliday(@RequestBody @Valid HolidayCreateCommand holidayCreateCommand)
             throws ValidationException
     {
@@ -187,6 +203,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("holidays")
     public ResponseEntity<Void> updateHoliday(@RequestBody HolidayUpdateCommand holidayCommand)
     {
@@ -194,6 +211,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("holidays/{id}")
     public ResponseEntity<Void> deleteHoliday(@PathVariable Integer id)
     {
