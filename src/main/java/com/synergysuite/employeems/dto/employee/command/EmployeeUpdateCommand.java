@@ -20,9 +20,8 @@ public class EmployeeUpdateCommand {
     private String jobTitle;
     @NotNull(message = "Start date can't be null.")
     private LocalDate startDate;
+    private LocalDate endDate;
     @NotEmpty(message = "Username can't be blank.")
     private String username;
-    @NotNull(message = "Password can't be null.")
-    private String password;
 
 }

@@ -16,8 +16,8 @@ public class EmployeeAllInfoQuery {
     private String lastName;
     private String jobTitle;
     private LocalDate startDate;
+    private LocalDate endDate;
     private String username;
-    private String password;
 
     private List<PastExperienceQuery> pastExperiences;
     private List<HolidayQuery> holidays;

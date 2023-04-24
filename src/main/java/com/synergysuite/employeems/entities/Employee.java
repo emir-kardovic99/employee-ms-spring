@@ -1,6 +1,5 @@
 package com.synergysuite.employeems.entities;
 
-import com.synergysuite.employeems.dto.employee.command.EmployeeCreateCommand;
 import com.synergysuite.employeems.dto.employee.command.EmployeeUpdateCommand;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +33,10 @@ public class Employee {
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private LocalDate startDate;
+
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private LocalDate endDate;
 
     @Column(unique = true)
     private String username;
@@ -78,6 +81,6 @@ public class Employee {
         setJobTitle(employeeCommand.getJobTitle());
         setStartDate(employeeCommand.getStartDate());
         setUsername(employeeCommand.getUsername());
-        setPassword(employeeCommand.getPassword());
+        setEndDate(employeeCommand.getEndDate());
     }
 }

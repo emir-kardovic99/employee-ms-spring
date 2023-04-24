@@ -4,7 +4,6 @@ import com.synergysuite.employeems.dto.employee.command.EmployeeCreateCommand;
 import com.synergysuite.employeems.dto.employee.command.EmployeeUpdateCommand;
 import com.synergysuite.employeems.dto.employee.query.EmployeeAllInfoQuery;
 import com.synergysuite.employeems.dto.employee.query.EmployeeQuery;
-import com.synergysuite.employeems.dto.holiday.query.HolidayExtendQuery;
 import com.synergysuite.employeems.dto.role.query.RoleQuery;
 import com.synergysuite.employeems.entities.Employee;
 import com.synergysuite.employeems.entities.Role;
@@ -14,13 +13,11 @@ import com.synergysuite.employeems.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,7 +66,6 @@ public class EmployeeService {
     {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeCommand.getId());
         if (employeeOptional.isPresent()) {
-            employeeCommand.setPassword(passwordEncoder.encode(employeeCommand.getPassword()));
             Employee employee = employeeOptional.get();
             employee.copy(employeeCommand);
             employeeRepository.save(employee);
